@@ -1,0 +1,19 @@
+#!/bin/sh
+echo "#######################"
+echo "#   START WIFI        #"
+echo "#######################"
+
+# start wifi
+ifconfig wlan0 down
+
+killall -9 wpa_supplicant
+
+wpa_supplicant -c /configs/wpa_supplicant.conf -i wlan0 &
+
+# killall dhcp
+killall udhcpc
+# config dhcp
+udhcpc -i wlan0
+
+# ifconfig wlan0 192.168.2.145 netmask 255.255.255.0;
+# route add default gw 192.168.2.1 wlan0;
